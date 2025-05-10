@@ -71,12 +71,6 @@ dotnet test
 dotnet test --filter "Name=DevePreencherFormularioCadastro"
 ```
 
-> ⚡ Use `CI=true` para rodar em headless mode:
-
-```bash
-CI=true dotnet test
-```
-
 ---
 
 ## 🪨 Testes Implementados
@@ -108,15 +102,12 @@ Inclui:
 
 * Execução em ambiente Linux
 * Chrome headless via imagem Selenium
-* Upload de screenshots e logs (em breve)
-
 ---
 
 ## 🎯 Futuras melhorias
 
-* Geração de relatórios HTML (Allure, ExtentReports ou ReportUnit)
+* Geração de relatórios HTML (ExtentReports ou ReportUnit)
 * Testes parametrizados
-* Integração com BrowserStack / Sauce Labs
 * Implementação de logs e screenshots em falhas
 
 ---
@@ -124,7 +115,6 @@ Inclui:
 ## 👨‍💻 Autor
 
 **Willames Vital**
-Engenheiro de Qualidade | Especialista em Testes Automatizados com C# e Playwright
 
 ---
 
