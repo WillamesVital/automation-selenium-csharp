@@ -2,7 +2,7 @@ using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using SeleniumAutomation.Pages;
-using System;
+using SeleniumAutomation.Utils;
 
 namespace SeleniumAutomation.Tests
 {
@@ -38,36 +38,59 @@ namespace SeleniumAutomation.Tests
         [Test]
         public void DevePreencherFormularioCadastro()
         {
-            homePage.ClicarEmCadastro();
-            cadastroPage.PreencherFormulario(
-                "Teste Nome",
-                "test@test.com",
-                "Senha123",
-                "Senha123",
-                "1234567890",
-                "01/01/2000",
-                "https://github.com/WillamesVital",
-                "Aprender automação de testes com Selenium e C#"
+            StepHelper.Step("Quando o usuário clica no botão de Cadastro", () =>
+            {
+                homePage.ClicarEmCadastro();
+            });
+
+            StepHelper.Step("E preenche o formulário", () =>
+            {
+                cadastroPage.PreencherFormulario(
+                    "Teste Nome",
+                    "test@test.com",
+                    "Senha123",
+                    "Senha123",
+                    "1234567890",
+                    "01/01/2000",
+                    "https://github.com/WillamesVital",
+                    "Aprender automação de testes com Selenium e C#"
             );
 
-            cadastroPage.UploadFotoPerfil("foto.jpg");
+            });
 
-            cadastroPage.UploadCurriculo("resume.pdf");
+            StepHelper.Step("E faz o upload dos arquivos", () =>
+            {
+                cadastroPage.UploadFotoPerfil("foto.jpg");
+                cadastroPage.UploadCurriculo("resume.pdf");
+            });
+    
+            StepHelper.Step("E seleciona as opções de pais e genero", () =>
+            {
+                cadastroPage.SelecionarPais("brasil");
+                cadastroPage.SelecionarGenero("masculino");
+            });
 
-            cadastroPage.SelecionarPais("brasil");
+            StepHelper.Step("E seleciona o nível de experiência", () =>
+            {
+                cadastroPage.SelecionarNivelExperiencia("intermediario");
+            });
 
-            cadastroPage.SelecionarGenero("masculino");
+            StepHelper.Step("E aceita os termos de uso", () =>
+            {
+                cadastroPage.AceitarTermos();
+            });
 
-            cadastroPage.SelecionarNivelExperiencia("intermediario");
+            StepHelper.Step("E clica no botão de cadastrar", () =>
+            {
+                cadastroPage.ClicarCadastrar();
+            });
 
-            cadastroPage.AceitarTermos();
-
-            cadastroPage.ClicarCadastrar();
-            
-
-            string mensagem = cadastroPage.CapturarAlertaJavascript();
-            Assert.That(mensagem, Is.EqualTo("Cadastro realizado com sucesso!"));
-
+            StepHelper.Step("Então o alerta de sucesso é exibido", () =>
+            {
+                string mensagem = cadastroPage.CapturarAlertaJavascript();
+                Assert.That(mensagem, Is.EqualTo("Cadastro realizado com sucesso!"));
+            });
+        
         }
 
         [TearDown]
