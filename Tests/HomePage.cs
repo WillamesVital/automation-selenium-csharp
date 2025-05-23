@@ -2,6 +2,7 @@ using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using SeleniumAutomation.Pages;
+using SeleniumAutomation.Utils;
 
 namespace SeleniumAutomation.Tests
 {
@@ -35,32 +36,60 @@ namespace SeleniumAutomation.Tests
         [Test]
         public void DeveExibirOTituloCorretoNaHomePage()
         {
-            string titulo = homePage.GetTitlePage();
-            Assert.That(titulo, Is.EqualTo("Curso Prático de Automação de Testes com Playwright"));
+            StepHelper.Step("Verifica o título da página", () =>
+            {
+                string titulo = homePage.GetTitlePage();
+                Assert.That(titulo, Is.EqualTo("Curso Prático de Automação de Testes com Playwright"));
+            });
+           
         }
 
         [Test]
         public void DeveNavegarParaPaginaDeLogin()
         {
-            homePage.ClicarEmLogin();
-            Assert.That(driver.Url, Does.Contain("login"));
-            Assert.That(driver.Title, Is.EqualTo("Login"));
+            StepHelper.Step("Quando o usuário clica no botão de Login", () =>
+            {
+                homePage.ClicarEmLogin();
+            });
+
+            StepHelper.Step("Então a página de login é exibida", () =>
+            {
+                Assert.That(driver.Url, Does.Contain("login"));
+                Assert.That(driver.Title, Is.EqualTo("Login"));
+            });
+           
         }
 
         [Test]
         public void DeveNavegarParaPaginaDeCadastro()
         {
-            homePage.ClicarEmCadastro();
-            Assert.That(driver.Url, Does.Contain("register"));
-            Assert.That(driver.Title, Is.EqualTo("Cadastro de Usuário"));
+            StepHelper.Step("Quando o usuário clica no botão de Cadastre-se", () =>
+            {
+                homePage.ClicarEmCadastro();
+            });
+
+            StepHelper.Step("Então a página de cadastro é exibida", () =>
+            {
+                Assert.That(driver.Url, Does.Contain("register"));
+                Assert.That(driver.Title, Is.EqualTo("Cadastro de Usuário"));
+            });
+    
         }
 
         [Test]
         public void DeveNavegarParaPaginaDePesquisa()
         {
-            homePage.ClicarEmPesquisa();
-            Assert.That(driver.Url, Does.Contain("search"));
-            Assert.That(driver.Title, Is.EqualTo("Pesquisa na Web - Google"));
+
+            StepHelper.Step("Quando o usuário clica no botão de Pesquisa", () =>
+            {
+                homePage.ClicarEmPesquisa();
+            });
+
+            StepHelper.Step("Então a página de pesquisa é exibida", () =>
+            {
+                Assert.That(driver.Url, Does.Contain("search"));
+                Assert.That(driver.Title, Is.EqualTo("Pesquisa na Web - Google"));
+            });
         }
 
         [TearDown]
